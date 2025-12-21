@@ -1,3 +1,4 @@
+import 'package:auto_space/features/all_stock/view/view_stock.dart';
 import 'package:auto_space/features/home/widget/serviceCard.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ import '../newCustomer/view/newCustomer.dart' hide Newsupplier;
 import '../newProduct/view/newProduct.dart';
 import '../newSupplier/view/NewSupplier.dart';
 import 'package:auto_space/features/newCustomer/view/newCustomer.dart';
+import 'package:auto_space/features/new_stock/view/manage_stock.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -20,23 +22,18 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  List categories = ['All', 'Electronics', 'Engine', 'Brakes', 'Lights'];
-  int selectedCategory = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
-          /// ================= HEADER + HERO + SEARCH + CATEGORIES =================
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 55, horizontal: 25),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  /// Top Row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -44,13 +41,13 @@ class _HomeViewState extends State<HomeView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomText(
-                            text: "Auto Spare Parts Managment",
+                            text: "Monza Managment System",
                             color: AppColors.DeepDarkBlue,
                             weight: FontWeight.w600,
                             size: 19,
                           ),
                           CustomText(
-                            text: "Hello",
+                            text: "Hello..",
                             color: AppColors.DeepDarkBlue,
                             weight: FontWeight.w400,
                             size: 18,
@@ -63,11 +60,7 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ],
                   ),
-
                   SizedBox(height: 30),
-
-                  /// Hero
-                  ///Image
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
@@ -79,29 +72,27 @@ class _HomeViewState extends State<HomeView> {
 
                   ///Text
                   CustomText(
-                    text: 'Quality Auto Parts',
+                    text: 'Managment Made Easier',
                     color: Colors.black,
                     weight: FontWeight.bold,
                     size: 28,
                   ),
-
                   CustomText(
-                    text: 'For Every Vehicle',
+                    text: 'For Every Spare Parts Store',
                     color: AppColors.DeepDarkBlue,
                     weight: FontWeight.bold,
                     size: 22,
                   ),
                   const SizedBox(height: 14),
                   CustomText(
-                    text:
-                        'Find genuine spare parts for all car brands. Fast delivery, competitive prices, and expert support.',
+                    text: 'Manage your inventory with seamless ease',
                     color: AppColors.BlueGray,
                     weight: FontWeight.w500,
-                    size: 15,
+                    size: 18,
                   ),
                   const SizedBox(height: 30),
 
-                  ///Buttons
+                  // --- ROW 1: Customer & Supplier ---
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -118,7 +109,7 @@ class _HomeViewState extends State<HomeView> {
                           );
                         },
                         child: CustomText(
-                          text: 'New Customer',
+                          text: 'Add Customer',
                           color: Colors.white,
                           weight: FontWeight.w500,
                           size: 18,
@@ -136,7 +127,7 @@ class _HomeViewState extends State<HomeView> {
                           );
                         },
                         child: CustomText(
-                          text: "New Supplier",
+                          text: "Add Supplier",
                           color: Colors.white,
                           weight: FontWeight.w500,
                           size: 18,
@@ -144,7 +135,10 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 15),
+
+                  const SizedBox(height: 15),
+
+                  // --- ROW 2: Order & Product (Stock removed) ---
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -161,7 +155,7 @@ class _HomeViewState extends State<HomeView> {
                           );
                         },
                         child: CustomText(
-                          text: 'New Order',
+                          text: 'Add Order',
                           color: Colors.white,
                           weight: FontWeight.w500,
                           size: 18,
@@ -181,7 +175,7 @@ class _HomeViewState extends State<HomeView> {
                           );
                         },
                         child: CustomText(
-                          text: 'New Product',
+                          text: 'Add Product',
                           color: Colors.white,
                           weight: FontWeight.w500,
                           size: 18,
@@ -190,70 +184,55 @@ class _HomeViewState extends State<HomeView> {
                     ],
                   ),
 
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 15),
 
-                  /// Search
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    style: const TextStyle(color: Colors.black),
-                    decoration: appInputDecoration(
-                      hint: "Search products...",
-                      prefixIcon: const Icon(Icons.search),
-                    ),
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  /// Categories
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(categories.length, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedCategory = index;
-                            });
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(right: 16),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24,
-                              vertical: 10,
+                  // --- ROW 3: Manage Stock (Centered) ---
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.SteelBlue,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const Managestockview(),
                             ),
-                            decoration: BoxDecoration(
-                              color: selectedCategory == index
-                                  ? AppColors.DeepDarkBlue
-                                  : Colors.black12,
-                              borderRadius: BorderRadius.circular(20),
+                          );
+                        },
+                        child: CustomText(
+                          text: 'Add Stock',
+                          color: Colors.white,
+                          weight: FontWeight.w500,
+                          size: 18,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.SteelBlue,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const AllStockView(),
                             ),
-                            child: Text(
-                              categories[index],
-                              style: TextStyle(
-                                color: selectedCategory == index
-                                    ? Colors.white
-                                    : Colors.black,
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                    ),
+                          );
+                        },
+                        child: CustomText(
+                          text: 'View Stock',
+                          color: Colors.white,
+                          weight: FontWeight.w500,
+                          size: 18,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ),
-          ),
-
-          /// ================= PRODUCTS GRID =================
-          // SliverPadding(
-          //   padding: const EdgeInsets.all(15),
-          //   sliver: ServicesGridWidget()
-          // ),
-          SliverPadding(
-            padding: const EdgeInsets.all(15),
-            sliver: ServicesGridWidget(
-              titles: ['المحل', 'مصر الجديدة', 'الشروق'],
             ),
           ),
         ],

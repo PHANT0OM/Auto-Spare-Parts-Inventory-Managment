@@ -13,7 +13,6 @@ class AllproductsView extends StatefulWidget {
 }
 
 class _AllproductsViewState extends State<AllproductsView> {
-  // 1. Create instance of API Service
   final ProductApiService apiServices = ProductApiService();
 
   late Future<List<Product>> _productsFuture;

@@ -63,7 +63,6 @@ class ProductItemCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// 1. IMAGE SECTION
           Container(
             height: 180,
             width: double.infinity,
@@ -122,7 +121,7 @@ class ProductItemCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '\$${product.price.toStringAsFixed(2)}',
+                      "${product.price} EGP",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

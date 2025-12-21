@@ -1,14 +1,12 @@
-import 'package:auto_space/features/all_categories/data/category_models.dart';
-import 'package:auto_space/features/all_categories/view/allCategory_view.dart';
+import 'package:auto_space/features/all_stock/data/stock_models.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_space/core/constants/app_color.dart';
-import 'package:auto_space/features/all_categories/data/category_models.dart';
-import 'package:auto_space/features/all_categories/view/category_products_view.dart';
+import 'package:auto_space/features/all_stock/view/view_stock.dart';
 
-class CategoryCard extends StatelessWidget {
-  final CategoryModels category;
+class Stockcard extends StatelessWidget {
+  final StockModels stock;
 
-  const CategoryCard({super.key, required this.category});
+  const Stockcard({super.key, required this.stock});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +24,11 @@ class CategoryCard extends StatelessWidget {
             color: AppColors.SteelBlue.withOpacity(0.1),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Icon(Icons.category, color: AppColors.SteelBlue),
+          child: Icon(Icons.warehouse, color: AppColors.SteelBlue),
         ),
 
         title: Text(
-          category.name,
+          stock.productName,
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
 
@@ -39,14 +37,11 @@ class CategoryCard extends StatelessWidget {
           size: 16,
           color: Colors.grey,
         ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CategoryProductsView(category: category),
-            ),
-          );
-        },
+        subtitle: (Text(
+          "Quantity : ${stock.quantity} \n"
+          "Warehouse: ${stock.warehouseName}",
+        )),
+        onTap: () {},
       ),
     );
   }

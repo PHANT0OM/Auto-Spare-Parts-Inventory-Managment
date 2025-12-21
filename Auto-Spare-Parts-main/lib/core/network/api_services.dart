@@ -26,7 +26,7 @@ class ProductApiService {
   Future<void> createProduct(Map<String, dynamic> productData) async {
     try {
       await dioClient.dio.post(
-        "apiV4/Products/CreateProducts",
+        "http://127.0.0.1:8000/apiV4/Products/CreateProducts",
         data: productData,
       );
     } on DioException catch (e) {

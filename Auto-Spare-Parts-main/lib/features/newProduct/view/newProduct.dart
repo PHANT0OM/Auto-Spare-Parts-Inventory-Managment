@@ -21,8 +21,7 @@ class NewproductView extends StatefulWidget {
 }
 
 class _NewproductViewState extends State<NewproductView> {
-  final TextEditingController _idController =
-      TextEditingController(); // <--- ADDED ID CONTROLLER
+  final TextEditingController _idController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _costController = TextEditingController();
@@ -145,7 +144,7 @@ class _NewproductViewState extends State<NewproductView> {
                   CustomTextField(
                     controller: _idController,
                     labelText: 'Product ID',
-                    hintText: 'Enter ID (e.g. 0)',
+                    hintText: 'Enter ID',
                     keyboardType: TextInputType.number,
                     isNumeric: true,
                   ),

@@ -58,7 +58,7 @@ class Detailsview extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              "\$${product.price.toStringAsFixed(2)}",
+              "${product.price} EGP",
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -73,7 +73,7 @@ class Detailsview extends StatelessWidget {
             // DETAILS (Origin, ID, etc.)
             _buildDetailRow("Origin", product.origin),
             _buildDetailRow("Product ID", "${product.id}"),
-            _buildDetailRow("Cost", "\$${product.cost.toStringAsFixed(2)}"),
+            _buildDetailRow("Cost", "${product.cost} EGP"),
 
             // If you have descriptions in the future, add them here
             const Spacer(),

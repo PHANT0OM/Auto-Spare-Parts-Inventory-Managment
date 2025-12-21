@@ -1,41 +1,41 @@
+import 'package:auto_space/features/all_stock/data/stock_models.dart';
+import 'package:auto_space/features/all_stock/data/stock_repo.dart';
+import 'package:auto_space/features/all_stock/widget/StockCard.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_space/core/constants/app_color.dart';
 import 'package:auto_space/shared/custom_text.dart';
-import 'package:auto_space/features/all_categories/data/category_models.dart';
 import 'package:auto_space/core/network/api_services.dart';
-import 'package:auto_space/features/all_categories/data/category_repo.dart';
-import 'package:auto_space/features/all_categories/widget/categoryCard.dart';
 
-class AllCategoriesView extends StatefulWidget {
-  const AllCategoriesView({super.key});
+class AllStockView extends StatefulWidget {
+  const AllStockView({super.key});
 
   @override
-  State<AllCategoriesView> createState() => _AllCategoriesViewState();
+  State<AllStockView> createState() => _AllStockViewState();
 }
 
-class _AllCategoriesViewState extends State<AllCategoriesView> {
-  List<CategoryModels> _allCategories = [];
-  List<CategoryModels> _filteredCategories = [];
+class _AllStockViewState extends State<AllStockView> {
+  List<StockModels> _allStock = [];
+  List<StockModels> _filteredStock = [];
   bool _isLoading = true;
   String _errorMessage = '';
 
   @override
   void initState() {
     super.initState();
-    _fetchCategories();
+    _fetchStock();
   }
 
   // 2. Fetch Data Function
-  Future<void> _fetchCategories() async {
+  Future<void> _fetchStock() async {
     try {
-      final apiService = CategoryApiService();
-      final repo = CategoryRepositoryImpl(apiService: apiService);
+      final apiService = StockApiService();
+      final repo = StockRepositoryImpl(apiService: apiService);
 
-      final categories = await repo.fetchCategories();
+      final stock = await repo.fetchstock();
 
       setState(() {
-        _allCategories = categories;
-        _filteredCategories = categories; // Initially, display everything
+        _allStock = stock;
+        _filteredStock = stock;
         _isLoading = false;
       });
     } catch (e) {
@@ -48,15 +48,15 @@ class _AllCategoriesViewState extends State<AllCategoriesView> {
 
   // 3. Search Logic
   void _runFilter(String enteredKeyword) {
-    List<CategoryModels> results = [];
+    List<StockModels> results = [];
     if (enteredKeyword.isEmpty) {
       // If the search field is empty, show all categories
-      results = _allCategories;
+      results = _allStock;
     } else {
       // Filter: Check if name contains the keyword (case insensitive)
-      results = _allCategories
+      results = _allStock
           .where(
-            (category) => category.name.toLowerCase().contains(
+            (stock) => stock.productName.toLowerCase().contains(
               enteredKeyword.toLowerCase(),
             ),
           )
@@ -65,7 +65,7 @@ class _AllCategoriesViewState extends State<AllCategoriesView> {
 
     // Update the UI
     setState(() {
-      _filteredCategories = results;
+      _filteredStock = results;
     });
   }
 
@@ -75,7 +75,7 @@ class _AllCategoriesViewState extends State<AllCategoriesView> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: CustomText(
-          text: "Categories",
+          text: "Stock",
           color: AppColors.DeepDarkBlue,
           weight: FontWeight.w600,
           size: 28,
@@ -90,9 +90,9 @@ class _AllCategoriesViewState extends State<AllCategoriesView> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
-              onChanged: (value) => _runFilter(value), // Call filter on type
+              onChanged: (value) => _runFilter(value),
               decoration: InputDecoration(
-                labelText: 'Search Categories...',
+                labelText: 'Search Stock...',
                 prefixIcon: Icon(Icons.search, color: AppColors.SteelBlue),
                 filled: true,
                 fillColor: const Color.fromARGB(255, 178, 206, 255),
@@ -114,13 +114,15 @@ class _AllCategoriesViewState extends State<AllCategoriesView> {
                 ? const Center(child: CircularProgressIndicator())
                 : _errorMessage.isNotEmpty
                 ? Center(child: Text(_errorMessage))
-                : _filteredCategories.isEmpty
-                ? const Center(child: Text("No categories found"))
+                // FIX 1: Check _filteredStock.isEmpty so "No Stock" shows during search too
+                : _filteredStock.isEmpty
+                ? const Center(child: Text("No Stock found"))
                 : ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: _filteredCategories.length, // Use filtered list
+                    // FIX 2: Use _filteredStock.length, NOT _allStock.length
+                    itemCount: _filteredStock.length,
                     itemBuilder: (context, index) {
-                      return CategoryCard(category: _filteredCategories[index]);
+                      return Stockcard(stock: _filteredStock[index]);
                     },
                   ),
           ),
